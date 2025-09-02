@@ -1,0 +1,9 @@
+venv
+.env
+
+Artifacts/
+*.npy
+*.pkl
+*.csv
+*.model
+.env

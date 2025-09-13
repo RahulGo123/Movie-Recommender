@@ -1,28 +1,21 @@
 from movierecommender.components.data_ingestion import DataIngestion
 from movierecommender.components.data_validation import DataValidation
-<<<<<<< HEAD
 from movierecommender.components.data_transformation import DataTransformation
+from movierecommender.components.model_trainer import ModelTrainer
+
 from movierecommender.exception.exception import MovieRecommenderException
 from movierecommender.logging.logger import logging
 
-from movierecommender.entity.config_entity import DataIngestionConfig, TrainingPipelineConfig, DataValidationConfig, DataTransformationConfig
-=======
+from movierecommender.entity.config_entity import DataIngestionConfig, TrainingPipelineConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
 from movierecommender.exception.exception import MovieRecommenderException
 from movierecommender.logging.logger import logging
-
-from movierecommender.entity.config_entity import DataIngestionConfig, TrainingPipelineConfig, DataValidationConfig
->>>>>>> 52f92af1defe72e05ea1330c53b1e5ca4531ba01
 
 import sys
 
 if __name__=='__main__':
     try:
         trainingpipelineconfig=TrainingPipelineConfig()
-        
-<<<<<<< HEAD
         # DATA INGESITON
-=======
->>>>>>> 52f92af1defe72e05ea1330c53b1e5ca4531ba01
         dataingestionconfig=DataIngestionConfig(trainingpipelineconfig)
         data_ingestion=DataIngestion(dataingestionconfig)
         logging.info("Initiate the data ingestion")
@@ -30,10 +23,7 @@ if __name__=='__main__':
         logging.info("Data Initiation Completed")
         print(dataingestionartifact)
         
-<<<<<<< HEAD
         # DATA VALIDATION
-=======
->>>>>>> 52f92af1defe72e05ea1330c53b1e5ca4531ba01
         datavalidationconfig = DataValidationConfig(trainingpipelineconfig)
         data_validation = DataValidation(dataingestionartifact, datavalidationconfig)
         logging.info("Initiate Data Validation")
@@ -41,7 +31,6 @@ if __name__=='__main__':
         logging.info("Data Validation Complete")
         print(datavalidationartifact)
         
-<<<<<<< HEAD
         # DATA TRANSFORMATION
         datatransformationconfig = DataTransformationConfig(trainingpipelineconfig)
         logging.info("data Transformation started")
@@ -49,8 +38,13 @@ if __name__=='__main__':
         data_transformation_artifact = data_transformation.initiate_data_transformation()
         print(data_transformation_artifact)
         logging.info("Data Transformation completed")
-=======
->>>>>>> 52f92af1defe72e05ea1330c53b1e5ca4531ba01
         
+        logging.info("Model Training stared")
+        model_trainer_config = ModelTrainerConfig(trainingpipelineconfig)
+        model_trainer = ModelTrainer(model_trainer_config=model_trainer_config, data_transformation_artifact=data_transformation_artifact)
+        model_trainer_artifact = model_trainer.initiate_model_trainer()
+        
+        logging.info("Model Trained Artifact created")
+
     except Exception as e:
         raise MovieRecommenderException(e,sys)
